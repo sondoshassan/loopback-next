@@ -38,6 +38,16 @@ export interface BaseHttpOptions extends ListenOptions {
    * See {@link https://www.npmjs.com/package/stoppable | stoppable}
    */
   gracePeriodForClose?: number;
+  /**
+   * The following are for configuring properties which are directly set on
+   * https://nodejs.org/api/http.html#http_class_http_server and
+   * https://nodejs.org/api/net.html#net_class_net_server
+   */
+  keepAliveTimeout?: number;
+  headersTimeout?: number;
+  maxConnections?: number;
+  maxHeadersCount?: number;
+  timeout?: number;
 }
 
 /**
@@ -109,6 +119,26 @@ export class HttpServer {
     } else {
       this.server = http.createServer(this.requestListener);
     }
+
+    // Apply server properties
+    const {keepAliveTimeout, headersTimeout, maxConnections, maxHeadersCount,
+      timeout} = this.serverOptions;
+    if (keepAliveTimeout) {
+      this.server.keepAliveTimeout = keepAliveTimeout;
+    }
+    if (headersTimeout) {
+      this.server.headersTimeout = headersTimeout;
+    }
+    if (maxConnections) {
+      this.server.maxConnections = maxConnections;
+    }
+    if (maxHeadersCount) {
+      this.server.maxHeadersCount = maxHeadersCount;
+    }
+    if (timeout) {
+      this.server.timeout = timeout;
+    }
+
     // Set up graceful stop for http server
     if (typeof this.serverOptions.gracePeriodForClose === 'number') {
       debug(
