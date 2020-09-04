@@ -7,9 +7,90 @@
 
 'use strict';
 
-exports[
-  `lb4 relation HasManyThrough checks if the controller file created  answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","relationName":"myPatients"} controller file has been created with hasManyThrough relation 1`
-] = `
+exports[`lb4 relation HasManyThrough checks generated source class repository answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","registerInclusionResolver":false} generates Doctor repository file with different inputs 1`] = `
+import {DefaultCrudRepository, repository, HasManyThroughRepositoryFactory} from '@loopback/repository';
+import {Doctor, Patient, Appointment} from '../models';
+import {DbDataSource} from '../datasources';
+import {inject, Getter} from '@loopback/core';
+import {AppointmentRepository} from './appointment.repository';
+import {PatientRepository} from './patient.repository';
+
+export class DoctorRepository extends DefaultCrudRepository<
+  Doctor,
+  typeof Doctor.prototype.id
+> {
+
+  public readonly patients: HasManyThroughRepositoryFactory<Patient, typeof Patient.prototype.id,
+          Appointment,
+          typeof Doctor.prototype.id
+        >;
+
+  constructor(@inject('datasources.db') dataSource: DbDataSource, @repository.getter('AppointmentRepository') protected appointmentRepositoryGetter: Getter<AppointmentRepository>, @repository.getter('PatientRepository') protected patientRepositoryGetter: Getter<PatientRepository>,) {
+    super(Doctor, dataSource);
+    this.patients = this.createHasManyThroughRepositoryFactoryFor('patients', patientRepositoryGetter, appointmentRepositoryGetter,);
+  }
+}
+
+`;
+
+
+exports[`lb4 relation HasManyThrough checks generated source class repository answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","registerInclusionResolver":true} generates Doctor repository file with different inputs 1`] = `
+import {DefaultCrudRepository, repository, HasManyThroughRepositoryFactory} from '@loopback/repository';
+import {Doctor, Patient, Appointment} from '../models';
+import {DbDataSource} from '../datasources';
+import {inject, Getter} from '@loopback/core';
+import {AppointmentRepository} from './appointment.repository';
+import {PatientRepository} from './patient.repository';
+
+export class DoctorRepository extends DefaultCrudRepository<
+  Doctor,
+  typeof Doctor.prototype.id
+> {
+
+  public readonly patients: HasManyThroughRepositoryFactory<Patient, typeof Patient.prototype.id,
+          Appointment,
+          typeof Doctor.prototype.id
+        >;
+
+  constructor(@inject('datasources.db') dataSource: DbDataSource, @repository.getter('AppointmentRepository') protected appointmentRepositoryGetter: Getter<AppointmentRepository>, @repository.getter('PatientRepository') protected patientRepositoryGetter: Getter<PatientRepository>,) {
+    super(Doctor, dataSource);
+    this.patients = this.createHasManyThroughRepositoryFactoryFor('patients', patientRepositoryGetter, appointmentRepositoryGetter,);
+    this.registerInclusionResolver('patients', this.patients.inclusionResolver);
+  }
+}
+
+`;
+
+
+exports[`lb4 relation HasManyThrough checks generated source class repository answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} generates Doctor repository file with different inputs 1`] = `
+import {DefaultCrudRepository, repository, HasManyThroughRepositoryFactory} from '@loopback/repository';
+import {Doctor, Patient, Appointment} from '../models';
+import {DbDataSource} from '../datasources';
+import {inject, Getter} from '@loopback/core';
+import {AppointmentRepository} from './appointment.repository';
+import {PatientRepository} from './patient.repository';
+
+export class DoctorRepository extends DefaultCrudRepository<
+  Doctor,
+  typeof Doctor.prototype.id
+> {
+
+  public readonly patients: HasManyThroughRepositoryFactory<Patient, typeof Patient.prototype.id,
+          Appointment,
+          typeof Doctor.prototype.id
+        >;
+
+  constructor(@inject('datasources.db') dataSource: DbDataSource, @repository.getter('AppointmentRepository') protected appointmentRepositoryGetter: Getter<AppointmentRepository>, @repository.getter('PatientRepository') protected patientRepositoryGetter: Getter<PatientRepository>,) {
+    super(Doctor, dataSource);
+    this.patients = this.createHasManyThroughRepositoryFactoryFor('patients', patientRepositoryGetter, appointmentRepositoryGetter,);
+    this.registerInclusionResolver('patients', this.patients.inclusionResolver);
+  }
+}
+
+`;
+
+
+exports[`lb4 relation HasManyThrough checks if the controller file is created  answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","relationName":"myPatients"} controller file has been created with hasManyThrough relation 1`] = `
 import {
   Count,
   CountSchema,
@@ -123,9 +204,8 @@ export class DoctorPatientController {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough checks if the controller file created  answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} controller file has been created with hasManyThrough relation 1`
-] = `
+
+exports[`lb4 relation HasManyThrough checks if the controller file is created  answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} controller file has been created with hasManyThrough relation 1`] = `
 import {
   Count,
   CountSchema,
@@ -239,9 +319,8 @@ export class DoctorPatientController {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","sourceKeyOnThrough":"customKeyFrom","targetKeyOnThrough":"customKeyTo"} add custom keyTo and/or keyFrom to the through model 1`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","sourceKeyOnThrough":"customKeyFrom","targetKeyOnThrough":"customKeyTo"} add custom keyTo and/or keyFrom to the through model 1`] = `
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Patient} from './patient.model';
 import {Appointment} from './appointment.model';
@@ -270,9 +349,8 @@ export class Doctor extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","sourceKeyOnThrough":"customKeyFrom","targetKeyOnThrough":"customKeyTo"} add custom keyTo and/or keyFrom to the through model 2`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","sourceKeyOnThrough":"customKeyFrom","targetKeyOnThrough":"customKeyTo"} add custom keyTo and/or keyFrom to the through model 2`] = `
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
@@ -306,9 +384,8 @@ export class Appointment extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","sourceKeyOnThrough":"customKeyFrom"} add custom keyTo and/or keyFrom to the through model 1`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","sourceKeyOnThrough":"customKeyFrom"} add custom keyTo and/or keyFrom to the through model 1`] = `
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Patient} from './patient.model';
 import {Appointment} from './appointment.model';
@@ -337,9 +414,8 @@ export class Doctor extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","sourceKeyOnThrough":"customKeyFrom"} add custom keyTo and/or keyFrom to the through model 2`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","sourceKeyOnThrough":"customKeyFrom"} add custom keyTo and/or keyFrom to the through model 2`] = `
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
@@ -373,9 +449,8 @@ export class Appointment extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","targetKeyOnThrough":"customKeyTo"} add custom keyTo and/or keyFrom to the through model 1`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","targetKeyOnThrough":"customKeyTo"} add custom keyTo and/or keyFrom to the through model 1`] = `
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Patient} from './patient.model';
 import {Appointment} from './appointment.model';
@@ -404,9 +479,8 @@ export class Doctor extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","targetKeyOnThrough":"customKeyTo"} add custom keyTo and/or keyFrom to the through model 2`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with custom keyFrom and/or keyTo answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","targetKeyOnThrough":"customKeyTo"} add custom keyTo and/or keyFrom to the through model 2`] = `
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
@@ -440,9 +514,8 @@ export class Appointment extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with custom relation name answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","relationName":"myPatients"} relation name should be myPatients 1`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with custom relation name answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","relationName":"myPatients"} relation name should be myPatients 1`] = `
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Patient} from './patient.model';
 import {Appointment} from './appointment.model';
@@ -471,9 +544,8 @@ export class Doctor extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with custom relation name answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","relationName":"myPatients"} relation name should be myPatients 2`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with custom relation name answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment","relationName":"myPatients"} relation name should be myPatients 2`] = `
 import {DefaultCrudRepository, repository, HasManyThroughRepositoryFactory} from '@loopback/repository';
 import {Doctor, Patient, Appointment} from '../models';
 import {DbDataSource} from '../datasources';
@@ -494,14 +566,14 @@ export class DoctorRepository extends DefaultCrudRepository<
   constructor(@inject('datasources.db') dataSource: DbDataSource, @repository.getter('AppointmentRepository') protected appointmentRepositoryGetter: Getter<AppointmentRepository>, @repository.getter('PatientRepository') protected patientRepositoryGetter: Getter<PatientRepository>,) {
     super(Doctor, dataSource);
     this.myPatients = this.createHasManyThroughRepositoryFactoryFor('myPatients', patientRepositoryGetter, appointmentRepositoryGetter,);
+    this.registerInclusionResolver('myPatients', this.myPatients.inclusionResolver);
   }
 }
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with default values answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} has correct default foreign keys 1`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with default values answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} has correct default foreign keys 1`] = `
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
@@ -535,9 +607,8 @@ export class Appointment extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with default values answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} has correct imports and relation name patients 1`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with default values answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} has correct imports and relation name patients 1`] = `
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Patient} from './patient.model';
 import {Appointment} from './appointment.model';
@@ -566,9 +637,8 @@ export class Doctor extends Entity {
 
 `;
 
-exports[
-  `lb4 relation HasManyThrough generates model relation with default values answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} has correct imports and relation name patients 2`
-] = `
+
+exports[`lb4 relation HasManyThrough generates model relation with default values answers {"relationType":"hasManyThrough","sourceModel":"Doctor","destinationModel":"Patient","throughModel":"Appointment"} has correct imports and relation name patients 2`] = `
 import {DefaultCrudRepository, repository, HasManyThroughRepositoryFactory} from '@loopback/repository';
 import {Doctor, Patient, Appointment} from '../models';
 import {DbDataSource} from '../datasources';
@@ -589,6 +659,7 @@ export class DoctorRepository extends DefaultCrudRepository<
   constructor(@inject('datasources.db') dataSource: DbDataSource, @repository.getter('AppointmentRepository') protected appointmentRepositoryGetter: Getter<AppointmentRepository>, @repository.getter('PatientRepository') protected patientRepositoryGetter: Getter<PatientRepository>,) {
     super(Doctor, dataSource);
     this.patients = this.createHasManyThroughRepositoryFactoryFor('patients', patientRepositoryGetter, appointmentRepositoryGetter,);
+    this.registerInclusionResolver('patients', this.patients.inclusionResolver);
   }
 }
 
