@@ -34,16 +34,18 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.1.5",
     "@grpc/proto-loader": "^0.5.5",
-    "@loopback/boot": "^2.5.1",
-    "@loopback/core": "^2.9.5",
-    "@loopback/repository": "^2.11.2",
-    "@loopback/rest": "^6.2.0",
     "debug": "^4.1.1",
     "glob": "^7.1.6",
     "minimist": "^1.2.5",
     "protobufjs": "^6.10.1"
   },
+  "peerDependencies": {
+    "@loopback/boot": "^2.5.1",
+    "@loopback/core": "^2.9.5"
+  },
   "devDependencies": {
+    "@loopback/boot": "^2.5.1",
+    "@loopback/core": "^2.9.5",
     "@loopback/build": "^6.2.2",
     "@loopback/eslint-config": "^9.0.2",
     "@loopback/testlab": "^3.2.4",
