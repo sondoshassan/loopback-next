@@ -2,6 +2,8 @@
 // Node module: @loopback/repository
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
+
+import debugFactory from 'debug';
 import {
   DataObject,
   Entity,
@@ -21,6 +23,10 @@ import {
   DefaultHasManyThroughRepository,
   HasManyThroughRepository,
 } from './has-many-through.repository';
+
+const debug = debugFactory(
+  'loopback:repository:relations:has-many-through:repository-factory',
+);
 
 /**
  * a factory to generate hasManyThrough repository class.
@@ -51,6 +57,7 @@ export function createHasManyThroughRepositoryFactory<
   throughRepositoryGetter: Getter<EntityCrudRepository<Through, ThroughID>>,
 ): HasManyThroughRepositoryFactory<Target, TargetID, Through, SourceID> {
   const meta = resolveHasManyThroughMetadata(relationMetadata);
+  debug('Resolved HasManyThrough relation metadata: %o', meta);
   const result = function (fkValue: SourceID) {
     function getTargetConstraintFromThroughModels(
       throughInstances: Through[],
