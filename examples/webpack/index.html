@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LoopBack 4 Core Modules WebPack Demo</title>
+    <script src="dist/bundle.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <script>
+      async function greet() {
+        const element = document.createElement('div');
+
+        // Exported TypeScript functions/classes/types/constants are now
+        // available under `LoopBack` namespace
+        const greetings = await LoopBack.main();
+        
+        const list = greetings.map(g => `<li>${g}</li>`);
+        element.innerHTML = `
+  <h1>Hello from LoopBack</h1>
+  <p/>
+  <ul>
+    ${list.join('\n')}
+  </ul>`;
+
+        return element;
+      }
+
+      greet().then(element => document.body.appendChild(element));
+    </script>
+  </body>
+</html>
